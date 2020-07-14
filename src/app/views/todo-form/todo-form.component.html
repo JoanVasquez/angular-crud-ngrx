@@ -1,0 +1,12 @@
+<div class="row">
+  <div
+    *ngIf="data"
+    class="col-md-6 mt-5 mr-auto ml-auto border p-4 rounded bg-white"
+  >
+    <app-form
+      [data]="data"
+      [props]="props"
+      (filterSubmit)="onSubmit()"
+    ></app-form>
+  </div>
+</div>

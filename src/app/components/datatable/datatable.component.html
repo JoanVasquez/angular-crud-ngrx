@@ -1,0 +1,48 @@
+<div class="table-responsive" *ngIf="(data | async).length">
+  <table class="table table-sm table-striped text-center">
+    <thead>
+      <tr>
+        <th scope="col" *ngFor="let ht of objectValues(headerTable)">
+          <span *ngIf="ht.constructor.name === 'String'; else actions">
+            {{ ht }}
+          </span>
+          <ng-template #actions>
+            <span *ngIf="action">
+              Actions
+            </span>
+          </ng-template>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dt of data | async | paginate: paginationConfig">
+        <td *ngFor="let ht of objectKeys(headerTable)">
+          <div class="mt-2">
+            {{ dt[ht] }}
+          </div>
+          <div *ngIf="ht === 'actions'" class="mt-2">
+            <button
+              type="button"
+              class="ml-2 mt-2 btn btn-secondary"
+              (click)="onEdit(dt.id)"
+            >
+              Edit
+            </button>
+            <button
+              *ngIf="headerTable[ht].delete"
+              type="button"
+              class="ml-2 mt-2 btn btn-danger"
+              (click)="onDelete(dt.id)"
+            >
+              Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination
+    [paginationConfig]="paginationConfig"
+    *ngIf="(data | async).length"
+  ></pagination>
+</div>
